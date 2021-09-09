@@ -1,11 +1,8 @@
 import time
-
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivymd.app import MDApp
-from kivymd.uix.button import MDRectangleFlatButton, MDRoundFlatIconButton
+from kivymd.uix.button import MDRectangleFlatButton, MDRoundFlatIconButton, MDTextButton
 from kivymd.uix.label import MDLabel, MDIcon
 from kivymd.uix.screen import MDScreen
 from kivy.app import App
