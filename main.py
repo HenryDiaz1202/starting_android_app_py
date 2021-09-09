@@ -79,4 +79,4 @@ class Principal(App):
         return CameraClick()
 
 
-Principal().run()
+MainApp().run()
