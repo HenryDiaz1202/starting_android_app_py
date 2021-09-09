@@ -1,25 +1,42 @@
+import time
+
+from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivymd.app import MDApp
 from kivymd.uix.button import MDRectangleFlatButton, MDRoundFlatIconButton
 from kivymd.uix.label import MDLabel, MDIcon
 from kivymd.uix.screen import MDScreen
+from kivy.app import App
+
+Builder.load_string('''
+
+<CameraClick>:
+    orientation:'vertical'
+    Camera:
+        id: camera
+        resolution: (640, 480)
+        play: False
+    ToggleButton:
+        text: 'Iniciar'
+        on_press: camera.play = not camera.play
+        size_hint_y: None
+        height: '48dp' 
+    Button: 
+        text: 'Tomar foto'
+        size_hint_y: None
+        height: '48dp'
+        on_press: root.capture()
+''')
 
 
-class ActivarReconocimiento(MDApp):
-    def build(self):
-        screen = MDScreen()
-        screen.add_widget(
-            MDLabel(
-                text="Object recognition",
-                pos_hint={'x': 0, 'y': 0.2},
-                halign="center"
-            )
-        )
-        screen.add_widget(
-            Button(text="Hello")
-        )
-        return screen
+class CameraClick(BoxLayout):
+    def capture(self):
+        camera = self.ids['camera']
+        trimester = time.strftime("%Y%m%d_%%H%M%S")
+        camera.export_to_png("IMG_{}.png".format(trimester))
+        print("Captured")
 
 
 class MainApp(MDApp):
@@ -57,4 +74,9 @@ class MainApp(MDApp):
         return screen
 
 
-MainApp().run()
+class Principal(App):
+    def build(self):
+        return CameraClick()
+
+
+Principal().run()
