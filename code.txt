@@ -1,41 +1,60 @@
-import time
-from kivy.app import App
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-
-Builder.load_string('''
-<CameraClick>:
-    orientation: 'vertical'
-    Camera:
-        id: camera
-        resolution: (640, 480)
-        play: False
-
-    ToggleButton:
-        text:'play'
-        on_press: camera.play = not camera.play
-        size_hint_y: None
-        height: '48dp'
-
-    Button:
-        text: 'Capture'
-        size_hint_y: None
-        height: '48dp'
-        on_press: root.capture()
-''')
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivymd.app import MDApp
+from kivymd.uix.button import MDRectangleFlatButton, MDRoundFlatIconButton
+from kivymd.uix.label import MDLabel, MDIcon
+from kivymd.uix.screen import MDScreen
 
 
-class CameraClick(BoxLayout):
-    def capture(self):
-        camera = self.ids['camera']
-        timestr = time.strftime("%Y%m%d_%H%M%S")
-        camera.export_to_png("IMG_{}.png".format(timestr))
-        print("Tomada")
-
-
-class Main(App):
+class ActivarReconocimiento(MDApp):
     def build(self):
-        return CameraClick()
+        screen = MDScreen()
+        screen.add_widget(
+            MDLabel(
+                text="Object recognition",
+                pos_hint={'x': 0, 'y': 0.2},
+                halign="center"
+            )
+        )
+        screen.add_widget(
+            Button(text="Hello")
+        )
+        return screen
 
 
-Main().run()
+class MainApp(MDApp):
+    def build(self):
+        self.theme_cls.theme_style = "Dark"  # "Light"
+        screen = MDScreen()
+        screen.add_widget(
+            MDIcon(
+                halign='center',
+                icon="language-python",
+                pos_hint={'x': 0, 'y': 0.3}
+            )
+        )
+        screen.add_widget(
+            MDLabel(
+                text="Object recognition",
+                pos_hint={'x': 0, 'y': 0.2},
+                halign="center"
+            )
+        )
+        screen.add_widget(
+            MDRoundFlatIconButton(
+                icon="camera",
+                text="Abrir cámara",
+                pos_hint={"center_x": 0.5, "center_y": 0.5},
+            )
+        )
+        screen.add_widget(
+            MDLabel(
+                text="Developed by \n henrydiaz",
+                pos_hint={"center_x": 0.5, "center_y": 0.2},
+                halign="center"
+            )
+        )
+        return screen
+
+
+MainApp().run()
